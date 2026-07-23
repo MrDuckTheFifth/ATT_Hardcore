@@ -1,6 +1,7 @@
 ﻿using Alta.Api.DataTransferModels.Models.Responses;
 using Alta.Character;
 using Alta.Networking;
+using Alta.Networking.Servers;
 using Alta.Utilities;
 using HarmonyLib;
 using MelonLoader;
@@ -79,6 +80,8 @@ namespace ATT_Hardcore {
             if (!NetworkSceneManager.IsServer)
                 return;
 
+            ServerHandler.Current.ServerConfig.Settings.DropAllOnDeath = true;
+
             IAltaFolder serverFolder = AltaIO.ServersFolder;
             IAltaFolder serverIdFolder = serverFolder.GetSubfolder(server.Identifier.ToString());
             savesFolder = serverIdFolder.GetSubfolder("Save");
@@ -117,6 +120,8 @@ namespace ATT_Hardcore {
             connection.Disconnect("You died.");
 
             connection.Socket.DestroyConnection(connection, true);
+
+            MelonLogger.Msg($"{player.UserInfo.Username} has died!");
 
             Save();
         }
