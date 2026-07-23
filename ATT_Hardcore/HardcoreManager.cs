@@ -73,7 +73,7 @@ namespace ATT_Hardcore {
         internal static bool isInitialized { get; private set; }
 
         private static bool PassesChecks() {
-            return !NetworkSceneManager.IsServer && !isInitialized;
+            return NetworkSceneManager.IsServer && isInitialized;
         }
 
         internal static async void Init(GameServerInfo server) {
